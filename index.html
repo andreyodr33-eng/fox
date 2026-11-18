@@ -564,7 +564,9 @@ speedChangeTimers = Array.from(
 document.getElementById("result").textContent =
     "СКАЧКИ НАЧАЛИСЬ!";
 
-const raceStartTime = performance.now();
+raceStartTime = performance.now();
+lastMoveTime = raceStartTime;
+winnerTime = null;
 
 document.getElementById("time").textContent = "00 : 00";
 
