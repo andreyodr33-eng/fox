@@ -639,12 +639,15 @@ const increment = horseSpeeds[i];
     previous < 105 &&
     next >= 105
   ) {
-    const crossing = (105 - previous) / increment;
+  const crossing = (105 - previous) / increment;
 
-    if (crossing < bestCrossing) {
-      bestCrossing = crossing;
-      firstWinner = i + 1;
-    }
+  if (crossing < bestCrossing) {
+    bestCrossing = crossing;
+    firstWinner = i + 1;
+
+    firstWinnerTime =
+    lastMoveTime + crossing * frameDuration - raceStartTime;
+}
   }
 
   progress[i] = Math.min(exitProgress, next);
