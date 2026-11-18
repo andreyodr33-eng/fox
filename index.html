@@ -590,6 +590,11 @@ raceTimer = setInterval(() => {
 
 // Движение лошадей
 function moveHorses() {
+
+const frameTime = performance.now();
+const frameDuration = frameTime - lastMoveTime;
+let firstWinnerTime = null;
+  
 let firstWinner = null;
 let bestCrossing = Infinity;
 let allFinished = true;
