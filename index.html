@@ -340,7 +340,10 @@ let laneDirection = 1;
 let stakeCount = 0;
 let raceFinished = false;
 let raceWinner = null;
-
+let raceStartTime = 0; 
+let lastMoveTime = 0;
+let winnerTime = null;
+  
 const track = document.getElementById("track");
 // Загружаем 12 кадров галопа
 const horseFrames = [];
