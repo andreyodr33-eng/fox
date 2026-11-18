@@ -295,8 +295,7 @@ button {
 </div>
 
 <div class="board-center board-clock">
-  <span id="time">60</span>
-  <small>СЕК.</small>
+  <span id="time">00 : 00</span>
 </div>
 
 <div class="board-side board-right">
@@ -541,7 +540,7 @@ function startRace() {
   document.getElementById("laneButton").disabled = true;
   document.getElementById("betButton").disabled = true;
   document.getElementById("startButton").disabled = true;
-  remaining = 60;
+  
 
   progress = Array(laneCount).fill(0);
 
