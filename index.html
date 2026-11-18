@@ -466,6 +466,9 @@ function changeLanes() {
 
   prepareNextRace();
 
+  document.getElementById("time").textContent = "00 : 00";
+  winnerTime = null;
+
   if (laneCount === 5) laneDirection = -1;
   if (laneCount === 2) laneDirection = 1;
 
