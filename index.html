@@ -618,10 +618,10 @@ const increment = horseSpeeds[i];
   // Определяем первого пересёкшего финиш
   if (
     raceWinner === null &&
-    previous < 100 &&
-    next >= 100
+    previous < 105 &&
+    next >= 105
   ) {
-    const crossing = (100 - previous) / increment;
+    const crossing = (105 - previous) / increment;
 
     if (crossing < bestCrossing) {
       bestCrossing = crossing;
