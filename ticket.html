@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HORSE RACE — Билет</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 25px 15px;
+  background: #17251d;
+  color: white;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h2 {
+  color: #75e68a;
+  margin: 0 0 20px;
+}
+
+canvas {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  border-radius: 12px;
+}
+
+button {
+  width: 100%;
+  max-width: 450px;
+  min-height: 58px;
+  margin-top: 22px;
+  border: 0;
+  border-radius: 10px;
+  background: #258b45;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+button:active {
+  background: #176b32;
+}
+
+#message {
+  margin-top: 15px;
+  color: #b9d9c0;
+  text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<h2>ВАШ БИЛЕТ</h2>
+
+<canvas id="ticket" width="900" height="560"></canvas>
+
+<button id="saveButton">СОХРАНИТЬ БИЛЕТ</button>
+
+<div id="message"></div>
+
+<script>
+const params = new URLSearchParams(location.search);
+
+const race = Number(params.get("race"));
+const horse = Number(params.get("horse"));
+
+const canvas = document.getElementById("ticket");
+const ctx = canvas.getContext("2d");
+
+const message = document.getElementById("message");
+const saveButton = document.getElementById("saveButton");
+
+if (
+!Number.isInteger(race)  race < 1 
+!Number.isInteger(horse) || horse < 1
+) {
+message.textContent = "Ошибка: номер билета не указан.";
+saveButton.disabled = true;
+} else {
+drawTicket();
+}
+
+function drawTicket() {
+
+// Фон билета
+ctx.fillStyle = "#14251b";
+ctx.fillRect(0, 0, 900, 560);
+
+// Рамка
+ctx.strokeStyle = "#75e68a";
+ctx.lineWidth = 8;
+ctx.strokeRect(15, 15, 870, 530);
+
+// Название игры
+ctx.fillStyle = "#75e68a";
+ctx.textAlign = "center";
+ctx.font = "bold 65px Arial";
+ctx.fillText("HORSE RACE", 450, 115);
+
+// Заголовок
+ctx.fillStyle = "#ffffff";
+ctx.font = "bold 48px Arial";
+ctx.fillText("БИЛЕТ УЧАСТНИКА", 450, 195);
+
+// Разделительная линия
+ctx.strokeStyle = "#75e68a";
+ctx.lineWidth = 3;
+ctx.beginPath();
+ctx.moveTo(100, 235);
+ctx.lineTo(800, 235);
+ctx.stroke();
+
+// Номер заезда
+ctx.textAlign = "left";
+ctx.fillStyle = "#ffffff";
+ctx.font = "bold 48px Arial";
+ctx.fillText("ЗАЕЗД №", 110, 330);
+
+ctx.textAlign = "right";
+ctx.fillStyle = "#75e68a";
+ctx.font = "bold 75px Arial";
+ctx.fillText(String(race), 790, 330);
+
+// Номер лошади
+ctx.textAlign = "left";
+ctx.fillStyle = "#ffffff";
+ctx.font = "bold 48px Arial";
+ctx.fillText("ЛОШАДЬ №", 110, 430);
+
+ctx.textAlign = "right";
+ctx.fillStyle = "#75e68a";
+ctx.font = "bold 90px Arial";
+ctx.fillText(String(horse), 790, 435);
+
+// Нижняя надпись
+ctx.textAlign = "center";
+ctx.fillStyle = "#b9d9c0";
+ctx.font = "28px Arial";
+ctx.fillText(
+"СОХРАНИТЕ БИЛЕТ ДО ОКОНЧАНИЯ ЗАЕЗДА",
+450,
+505
+);
+}
+
+// Преобразование билета в PNG
+function makeImage() {
+return new Promise((resolve, reject) => {
+canvas.toBlob(blob => {
+if (blob) resolve(blob);
+else reject(new Error("Не удалось создать изображение"));
+}, "image/png");
+});
+}
+
+// Сохранение билета
+saveButton.addEventListener("click", async () => {
+try {
+const blob = await makeImage();
+
+const file = new File(
+  [blob],
+  HORSE-RACE-${race}-${horse}.png,
+  { type: "image/png" }
+);
+
+// На телефонах с поддержкой обмена файлами
+if (
+  navigator.share &&
+  navigator.canShare &&
+  navigator.canShare({ files: [file] })
+) {
+  await navigator.share({
+    files: [file],
+    title: "Билет HORSE RACE"
+  });
+
+  message.textContent = "Выберите сохранение изображения.";
+} else {
+  // Обычная загрузка файла
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = HORSE-RACE-${race}-${horse}.png;
+
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+
+  setTimeout(() => URL.revokeObjectURL(url), 10000);
+
+  message.textContent = "Билет подготовлен к сохранению.";
+}
+} catch (error) {
+if (error.name !== "AbortError") {
+message.textContent = "Не удалось сохранить билет.";
+console.error(error);
+}
+}
+});
+</script>
+
+</body>
+</html>
