@@ -709,10 +709,7 @@ function finishRace(winner) {
   clearInterval(raceTimer);
   clearInterval(animationTimer);
 
-  document.getElementById("result").textContent =
-    "ПОБЕДИЛА ЛОШАДЬ № " + winner + " !";
-
-  raceNumber++;
+   raceNumber++;
 
   localStorage.setItem("raceNumber", raceNumber);
 
