@@ -667,11 +667,23 @@ if (progress[i] >= exitProgress) {
 }
 
 // Объявляем победителя сразу после пересечения финиша
-if (raceWinner === null && firstWinner !== null) {
-raceWinner = firstWinner;
+lastMoveTime = frameTime;
 
-document.getElementById("result").textContent =
-  "ПОБЕДИЛА ЛОШАДЬ № " + raceWinner + " !";
+if (raceWinner === null && firstWinner !== null) {
+  raceWinner = firstWinner;
+  winnerTime = firstWinnerTime;
+
+  const hundredths = Math.floor(winnerTime / 10);
+  const seconds = Math.floor(hundredths / 100);
+  const fraction = hundredths % 100;
+
+  document.getElementById("result").innerHTML =
+    "ПОБЕДА № " + raceWinner +
+    ' <span style="color:white">' +
+    String(seconds).padStart(2, "0") +
+    " : " +
+    String(fraction).padStart(2, "0") +
+    "</span>";
 }
 
 // Завершаем заезд, когда исчезли все лошади
