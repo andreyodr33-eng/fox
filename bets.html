@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HORSE RACE — Ставки</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 20px 15px;
+  min-height: 100vh;
+  background: #17251d;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+h1 {
+  color: #75e68a;
+  font-size: 28px;
+}
+
+.info {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  margin: 25px auto;
+  max-width: 500px;
+  font-size: 18px;
+}
+
+.info strong {
+  color: #75e68a;
+  font-size: 25px;
+}
+
+#horseChoices {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 450px;
+  margin: 20px auto;
+}
+
+.horseButton {
+  min-height: 65px;
+  border: 2px solid #75e68a;
+  border-radius: 10px;
+  background: #344b3b;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.horseButton.selected {
+  background: #258b45;
+  border-color: white;
+}
+
+.horseButton:disabled {
+  opacity: 0.35;
+  background: #555;
+  border-color: #888;
+}
+
+#betButton {
+  width: 100%;
+  max-width: 450px;
+  min-height: 60px;
+  margin: 15px auto;
+  border: 0;
+  border-radius: 10px;
+  background: #258b45;
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+#betButton:disabled {
+  opacity: 0.4;
+}
+
+#result {
+  margin: 20px 0;
+  color: #75e68a;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#qrBox {
+  margin: 20px auto;
+  padding: 15px;
+  width: fit-content;
+  max-width: 100%;
+  background: white;
+  border-radius: 12px;
+}
+
+#qrCode {
+  width: 240px;
+  max-width: 100%;
+}
+
+#qrHint {
+  color: #222;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+#backButton {
+  width: 100%;
+  max-width: 450px;
+  min-height: 52px;
+  margin-top: 25px;
+  border: 1px solid #75e68a;
+  border-radius: 10px;
+  background: transparent;
+  color: white;
+  font-size: 18px;
+  display: block;
+  text-decoration: none;
+  line-height: 52px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>HORSE RACE</h1>
+<h2>ПРИЁМ СТАВОК</h2>
+
+<div class="info">
+  <div>
+    ЗАЕЗД<br>
+    № <strong id="raceNumber">1</strong>
+  </div>
+
+  <div>
+    ДОРОЖЕК<br>
+    <strong id="laneCount">2</strong>
+  </div>
+</div>
+
+<div id="result">Выберите лошадь</div>
+
+<div id="horseChoices"></div>
+
+<button id="betButton" disabled>
+  ПРИНЯТЬ СТАВКУ
+</button>
+
+<div id="qrBox" hidden>
+  <div id="qrCode"></div>
+  <div id="qrHint">
+    Покажите QR-код участнику
+  </div>
+</div>
+
+<a id="backButton" href="./index.html">
+  ВЕРНУТЬСЯ К ИГРЕ
+</button>
+
+<script>
+// Получаем данные текущего заезда
+
+let raceNumber =
+  Number(localStorage.getItem("raceNumber")) || 1;
+
+let laneCount =
+  Number(localStorage.getItem("laneCount")) || 2;
+
+let selectedHorses = [];
+
+try {
+  selectedHorses =
+    JSON.parse(localStorage.getItem("selectedHorses")) || [];
+} catch {
+  selectedHorses = [];
+}
+
+const savedBetsRace =
+  Number(localStorage.getItem("betsRaceNumber"));
+
+if (savedBetsRace !== raceNumber) {
+  selectedHorses = [];
+
+  localStorage.setItem("betsRaceNumber", raceNumber);
+  localStorage.setItem("selectedHorses", JSON.stringify([]));
+  localStorage.setItem("stakeCount", 0);
+}
+
+let selectedHorse = null;
+
+// Элементы страницы
+
+const raceElement = document.getElementById("raceNumber");
+const laneElement = document.getElementById("laneCount");
+const resultElement = document.getElementById("result");
+const horseChoices = document.getElementById("horseChoices");
+const betButton = document.getElementById("betButton");
+const qrBox = document.getElementById("qrBox");
+const qrCode = document.getElementById("qrCode");
+
+// Отображение исходных данных
+
+raceElement.textContent = raceNumber;
+laneElement.textContent = laneCount;
+
+
+// Создание кнопок выбора лошадей
+
+function drawHorseChoices() {
+
+  horseChoices.innerHTML = "";
+
+  for (let i = 1; i <= laneCount; i++) {
+
+    const button = document.createElement("button");
+
+    button.className = "horseButton";
+    button.textContent = "№ " + i;
+
+    const alreadyTaken = selectedHorses.includes(i);
+
+    if (alreadyTaken) {
+      button.disabled = true;
+      button.textContent += " ✓";
+    }
+
+    if (selectedHorse === i) {
+      button.classList.add("selected");
+    }
+
+    button.addEventListener("click", () => {
+
+      selectedHorse = i;
+
+      resultElement.textContent =
+        "Выбрана лошадь № " + i;
+
+      betButton.disabled = false;
+
+      drawHorseChoices();
+    });
+
+    horseChoices.appendChild(button);
+  }
+
+  if (selectedHorses.
+length >= laneCount) {
+    betButton.disabled = true;
+
+    resultElement.textContent =
+      "Все ставки на этот заезд приняты";
+  }
+}
+
+
+// Регистрация ставки
+
+function registerStake() {
+
+  if (selectedHorse === null) {
+    resultElement.textContent = "Сначала выберите лошадь";
+    return;
+  }
+
+  // Повторная проверка занятости
+
+  if (selectedHorses.includes(selectedHorse)) {
+    resultElement.textContent =
+      "На эту лошадь ставка уже принята";
+    return;
+  }
+
+  // Сохраняем ставку
+
+  selectedHorses.push(selectedHorse);
+
+  localStorage.setItem(
+    "selectedHorses",
+    JSON.stringify(selectedHorses)
+  );
+
+  localStorage.setItem(
+    "stakeCount",
+    selectedHorses.length
+  );
+
+  resultElement.textContent =
+    "ПРИНЯТА СТАВКА НА ЛОШАДЬ № " + selectedHorse;
+
+  // Формируем ссылку на билет
+
+  const ticketURL =
+    new URL("ticket.html", window.location.href).href +
+    "?race=" + raceNumber +
+    "&horse=" + selectedHorse;
+
+  // Создаём QR-код
+
+  const qrImageURL =
+    "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" +
+    encodeURIComponent(ticketURL);
+
+  qrCode.innerHTML = "";
+
+  const img = document.createElement("img");
+
+  img.src = qrImageURL;
+  img.alt = "QR-код билета";
+  img.width = 240;
+  img.height = 240;
+
+  qrCode.appendChild(img);
+
+  qrBox.hidden = false;
+
+  // Сбрасываем выбор и обновляем свободные места
+
+  selectedHorse = null;
+
+  drawHorseChoices();
+}
+
+
+// Кнопка регистрации
+
+betButton.addEventListener("click", registerStake);
+
+
+// Первоначальное отображение
+
+drawHorseChoices();
+
+</script>
+
+</body>
+</html>
