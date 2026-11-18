@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HORSE RACE</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 15px;
+  background: #17251d;
+  color: white;
+  font-family: Arial, sans-serif;
+  padding-bottom: 100px;
+}
+
+h1 {
+  text-align: center;
+  letter-spacing: 3px;
+}
+
+.race-number {
+  text-align: center;
+  font-size: 25px;
+  margin: 15px;
+  color: #ffd45c;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 15px 0;
+}
+
+button {
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.add {
+  background: #e6b94c;
+}
+
+.start {
+  background: #35b66a;
+  color: white;
+}
+
+.lane {
+  position: relative;
+  height: 75px;
+  margin: 9px 0;
+  background: #557d48;
+  border: 2px solid #b7c58c;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.lane:nth-child(even) {
+  background: #496d40;
+}
+
+.lane-number {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  z-index: 3;
+  background: #222;
+  padding: 4px 8px;
+  border-radius: 5px;
+}
+
+.finish {
+  position: absolute;
+  right: 12px;
+  top: 0;
+  height: 100%;
+  width: 9px;
+  background: repeating-linear-gradient(
+    0deg,
+    white 0px,
+    white 7px,
+    black 7px,
+    black 14px
+  );
+}
+
+.horse {
+  position: absolute;
+  left: 45px;
+  bottom: 4px;
+  font-size: 43px;
+  z-index: 2;
+  transition: left 0.2s linear;
+}
+
+.obstacle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 32px;
+}
+
+.bets {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.bet-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.bet-buttons button {
+  background: #e6b94c;
+  min-width: 55px;
+}
+
+.bet-buttons button:disabled {
+  background: #777;
+  color: #ccc;
+}
+
+.result {
+  text-align: center;
+  font-size: 24px;
+  color: #ffd45c;
+  margin: 20px 0;
+  min-height: 35px;
+}
+
+.timer {
+  text-align: center;
+  font-size: 20px;
+}
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.controls button {
+  flex: 1;
+  min-height: 52px;
+  font-size: 16px;
+  font-weight: bold;
+}
+.scoreboard {
+  width: 100%;
+  box-sizing: border-box;
+  background: #171c1b;
+  color: #55ff66;
+  border: 1px solid #315b37;
+  border-radius: 8px;
+  padding: 8px;
+  margin-bottom: 10px;
+  font-family: Arial, sans-serif;
+}
+
+
+
+.board-side {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.board-left {
+  text-align: left;
+}
+
+.board-right {
+  text-align: right;
+}
+
+.board-center {
+  text-align: center;
+}
+
+.board-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.board-top {
+  min-height: 48px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #315b37;
+}
+
+.board-bottom {
+  min-height: 58px;
+  padding-top: 6px;
+}
+
+.board-clock {
+  font-size: 28px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.board-message {
+  font-size: 16px;
+  font-weight: bold;
+  color: #55ff66;
+  text-align: center;
+}
+
+.board-message #result {
+  color: #55ff66;
+}
+
+.board-clock,
+.board-side,
+.board-bets {
+  color: #55ff66;
+}
+.scoreboard,
+.scoreboard * {
+  color: #55ff66;
+}
+
+.board-bets {
+  font-size: 13px;
+}
+
+#betList {
+  margin-top: 4px;
+  font-size: 12px;
+}
+.scoreboard,
+.scoreboard * {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: #55ff66;
+}
+.controls {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  width: 100%;
+  margin: 0;
+  padding: 10px 15px calc(10px + env(safe-area-inset-bottom));
+
+  background: #17251d;
+  border-top: 1px solid #315b37;
+}
+
+.controls button {
+  flex: 1;
+  min-height: 52px;
+}
+.horse-image {
+  width: 90px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  bottom: 2px;
+}
+</style>
+</head>
+
+<body>
+<div class="board-row board-top">
+<div class="board-side board-left">
+  PUNCHESTOWN
+</div>
+
+<div class="board-center board-clock">
+  <span id="time">60</span>
+  <small>СЕК.</small>
+</div>
+
+<div class="board-side board-right">
+  ЗАЕЗД № <span id="raceNumber">1</span>
+ </div>
+</div>
+<div class="board-row board-bottom">
+ <div class="board-side board-left">
+  ДОРОЖЕК:
+  <span id="laneInfo">2</span>
+</div>
+
+<div class="board-center board-message">
+  <div id="result"></div>
+</div>
+
+<div class="board-side board-right board-bets">
+  <div>
+    СТАВКИ:
+    <span id="betInfo">0</span>/<span id="betLimit">2</span>
+  </div>
+  <div id="betList">Нет</div>
+</div>
+</div>
+<div id="track"></div>
+<script>
+let raceNumber =
+  Number(localStorage.getItem("raceNumber")) || 1;
+
+let laneCount = 
+  Number(localStorage.getItem("laneCount")) || 2;
+let racing = false;
+let selectedHorses = [];
+let raceTimer = null;
+let animationTimer = null;
+let remaining = 60;
+let progress = [];
+let horseSpeeds = [];
+let targetSpeeds = [];
+let speedChangeTimers = [];
+let laneDirection = 1;
+let stakeCount = 0;
+let raceFinished = false;
+let raceWinner = null;
+
+const track = document.getElementById("track");
+// Загружаем 12 кадров галопа
+const horseFrames = [];
+
+for (let i = 1; i <= 12; i++) {
+const img = new Image();
+
+img.src =
+"horse-frames/horse" +
+String(i).padStart(2, "0") +
+".png";
+
+horseFrames.push(img);
+}
+
+let horseFrameIndex = 0;
+let horseFrameTimer = null;
+
+// Запуск покадровой анимации
+function startGallopAnimation() {
+
+stopGallopAnimation();
+
+
+horseFrameIndex = 0;
+
+// Сразу показываем первый кадр галопа
+for (let i = 1; i <= laneCount; i++) {
+  const horse = document.getElementById("horse" + i);
+
+  if (horse) {
+    horse.src = "horse-frames/horse0.png";
+  }
+}
+
+horseFrameTimer = setTimeout(() => {
+
+horseFrameTimer = setInterval(() => {
+
+   horseFrameIndex++;
+
+if (horseFrameIndex >= horseFrames.length) {
+  horseFrameIndex = 0;
+}
+
+for (let i = 1; i <= laneCount; i++) {
+
+  const horse = document.getElementById("horse" + i);
+
+  if (horse) {
+    horse.src = horseFrames[horseFrameIndex].src;
+  }
+}
+ }, 50);
+}, 230);
+}
+
+// Остановка анимации
+function stopGallopAnimation() {
+
+if (horseFrameTimer !== null) {
+clearInterval(horseFrameTimer);
+horseFrameTimer = null;
+}
+}
+
+document.getElementById("raceNumber").textContent =
+  raceNumber;
+
+// Создание дорожек
+function drawLanes() {
+  track.innerHTML = "";
+  
+  for (let i = 1; i <= laneCount; i++) {
+    track.innerHTML += `
+      <div class="lane" id="lane${i}">
+        <span class="lane-number">№ ${i}</span>
+        <div class="finish"></div>
+        <img
+          class="horse horse-image"
+          id="horse${i}"
+          src="horse-frames/horse0.png"
+          alt="Лошадь"
+         >
+      </div>
+    `;
+   }
+  updateInfo();
+ }
+    
+
+// Добавление дорожки
+function addLane() {
+  if (racing) return;
+
+  if (laneCount < 5) {
+    laneCount++;
+    drawLanes();
+  }
+}
+
+// Ставка на лошадь
+function makeBet(number) {
+  if (racing) return;
+
+  if (selectedHorses.includes(number)) return;
+
+  selectedHorses.push(number);
+
+  document.getElementById("bet" + number).disabled = true;
+  document.getElementById("result").textContent =
+    "Ставка на лошадь № " + number + " принята";
+}
+
+
+//Кнопка ставка
+
+function changeLanes() {
+  if (racing) return;
+
+  prepareNextRace();
+
+  if (laneCount === 5) laneDirection = -1;
+  if (laneCount === 2) laneDirection = 1;
+
+  laneCount += laneDirection;
+  localStorage.setItem("laneCount", laneCount);
+  selectedHorses = [];
+  stakeCount = 0;
+
+  drawLanes();
+  updateInfo();
+
+  document.getElementById("startButton").disabled = false;
+}
+
+function registerStake() {
+  if (racing) return;
+
+  prepareNextRace();
+
+  if (stakeCount >= laneCount) return;
+
+  stakeCount++;
+  selectedHorses.push(stakeCount);
+
+  updateInfo();
+
+  document.getElementById("result").textContent =
+    "Принята ставка на лошадь № " + stakeCount;
+
+  document.getElementById("startButton").disabled = false;
+}
+//Информация на экране
+function updateInfo() {
+
+  selectedHorses =
+    JSON.parse(localStorage.getItem("selectedHorses")) || [];
+
+  stakeCount = selectedHorses.length;
+
+  document.getElementById("laneInfo").textContent =
+    laneCount;
+
+  document.getElementById("betInfo").textContent =
+    stakeCount;
+
+  document.getElementById("betLimit").textContent =
+    laneCount;
+
+  document.getElementById("betList").textContent =
+    stakeCount > 0
+      ? "Ставки на лошадей: " + selectedHorses.join(", ")
+      : "Ставки: нет";
+}
+
+function prepareNextRace() {
+  if (!raceFinished) return;
+
+  raceFinished = false;
+  selectedHorses = [];
+  stakeCount = 0;
+
+  drawLanes();
+
+  document.getElementById("result").textContent = "";
+  
+  document.getElementById("startButton").disabled = true;
+}
+// Начало скачек
+function startRace() {
+  
+  if (racing) return;
+  raceWinner = null;
+  racing = true;
+
+  document.getElementById("laneButton").disabled = true;
+  document.getElementById("betButton").disabled = true;
+  document.getElementById("startButton").disabled = true;
+  remaining = 60;
+
+  progress = Array(laneCount).fill(0);
+
+  horseSpeeds = Array.from(
+  { length: laneCount },
+  () => 1.4 + Math.random() * 0.4
+);
+
+targetSpeeds = [...horseSpeeds];
+
+speedChangeTimers = Array.from(
+  { length: laneCount },
+  () => 10 + Math.floor(Math.random() * 10)
+);
+
+  drawLanes();
+  startGallopAnimation();
+document.getElementById("result").textContent =
+    "СКАЧКИ НАЧАЛИСЬ!";
+
+  raceTimer = setInterval(() => {
+    remaining--;
+    document.getElementById("time").textContent =
+      remaining;
+
+    if (remaining <= 0) {
+      finishRace();
+    }
+  }, 1000);
+
+  animationTimer = setInterval(moveHorses, 200);
+}
+
+// Движение лошадей
+function moveHorses() {
+let firstWinner = null;
+let bestCrossing = Infinity;
+let allFinished = true;
+
+for (let i = 0; i < laneCount; i++) {
+
+const lane = document.getElementById("lane" + (i + 1));
+const horse = document.getElementById("horse" + (i + 1));
+
+const previous = progress[i];
+
+const distance = lane.clientWidth - 100;
+
+// Сколько нужно пробежать, чтобы полностью скрыться
+const exitProgress =
+  ((lane.clientWidth - 45) / distance) * 100;
+
+if (previous < exitProgress) {
+
+  // Периодически задаём новую целевую скорость
+if (speedChangeTimers[i] <= 0) {
+
+  targetSpeeds[i] = 1.0 + Math.random() * 1.5;
+
+  speedChangeTimers[i] =
+    10 + Math.floor(Math.random() * 15);
+
+} else {
+  speedChangeTimers[i]--;
+}
+
+// Плавно приближаем текущую скорость к целевой
+horseSpeeds[i] +=
+  (targetSpeeds[i] - horseSpeeds[i]) * 0.08;
+
+const increment = horseSpeeds[i];
+  const next = previous + increment;
+
+  // Определяем первого пересёкшего финиш
+  if (
+    raceWinner === null &&
+    previous < 100 &&
+    next >= 100
+  ) {
+    const crossing = (100 - previous) / increment;
+
+    if (crossing < bestCrossing) {
+      bestCrossing = crossing;
+      firstWinner = i + 1;
+    }
+  }
+
+  progress[i] = Math.min(exitProgress, next);
+}
+
+const position =
+  45 + distance * progress[i] / 100;
+
+horse.style.left = position + "px";
+
+// Полностью скрываем лошадь за краем дорожки
+if (progress[i] >= exitProgress) {
+  horse.style.display = "none";
+} else {
+  allFinished = false;
+}
+}
+
+// Объявляем победителя сразу после пересечения финиша
+if (raceWinner === null && firstWinner !== null) {
+raceWinner = firstWinner;
+
+document.getElementById("result").textContent =
+  "ПОБЕДИЛА ЛОШАДЬ № " + raceWinner + " !";
+}
+
+// Завершаем заезд, когда исчезли все лошади
+if (allFinished && raceWinner !== null) {
+finishRace(raceWinner);
+}
+}
+// Завершение скачек
+
+function finishRace(winner) {
+
+  // Если сработал таймер, останавливаем только отсчёт.
+  // Лошади продолжают движение до полного выхода с дорожек.
+  if (winner === undefined || winner === null) {
+    clearInterval(raceTimer);
+    return;
+  }
+
+  racing = false;
+
+  stopGallopAnimation();
+
+  clearInterval(raceTimer);
+  clearInterval(animationTimer);
+
+  document.getElementById("result").textContent =
+    "ПОБЕДИЛА ЛОШАДЬ № " + winner + " !";
+
+  raceNumber++;
+
+  localStorage.setItem("raceNumber", raceNumber);
+
+  document.getElementById("raceNumber").textContent =
+    raceNumber;
+
+  raceFinished = true;
+
+  document.getElementById("laneButton").disabled = false;
+  document.getElementById("betButton").disabled = false;
+  document.getElementById("startButton").disabled = true;
+}
+
+// Первоначальный запуск
+drawLanes();
+document.getElementById("time").textContent = remaining;
+
+const laneButton = document.getElementById("laneButton");
+const betButton = document.getElementById("betButton");
+const startButton = document.getElementById("startButton");
+</script>
+
+<div class="controls">
+  <button id="laneButton" onclick="changeLanes()">
+    ДОРОЖКА
+  </button>
+
+  <button id="betButton" onclick="window.location.href='bets.html'">
+    СТАВКА
+  </button>
+
+  <button id="startButton" onclick="startRace()">
+    СТАРТ
+  </button>
+</div>
+
+</body>
+</html>
