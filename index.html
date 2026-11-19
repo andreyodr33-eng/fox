@@ -503,25 +503,37 @@ function registerStake() {
 //Информация на экране
 function updateInfo() {
 
-  selectedHorses =
-    JSON.parse(localStorage.getItem("selectedHorses")) || [];
+selectedHorses =
+JSON.parse(localStorage.getItem("selectedHorses")) || [];
 
-  stakeCount = selectedHorses.length;
+stakeCount = selectedHorses.length;
 
-  document.getElementById("laneInfo").textContent =
-    laneCount;
+document.getElementById("laneInfo").textContent =
+laneCount;
 
-  document.getElementById("betInfo").textContent =
-    stakeCount;
+document.getElementById("betInfo").textContent =
+stakeCount;
 
-  document.getElementById("betLimit").textContent =
-    laneCount;
+document.getElementById("betLimit").textContent =
+"∞";
 
-  document.getElementById("betList").textContent =
-    stakeCount > 0
-      ? "Ставки на лошадей: " + selectedHorses.join(", ")
-      : "Ставки: нет";
+const counts = [];
+
+for (let i = 1; i <= laneCount; i++) {
+const count = selectedHorses.filter(h => h === i).length;
+
+if (count > 0) {
+  counts.push(i + "/" + count);
 }
+}
+
+document.getElementById("betList").textContent =
+counts.length > 0
+? "Ставки: " + counts.join("; ")
+: "Ставки: нет";
+}
+
+  
 
 function prepareNextRace() {
   if (!raceFinished) return;
