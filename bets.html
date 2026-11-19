@@ -270,15 +270,7 @@ function registerStake() {
     return;
   }
 
-  // Повторная проверка занятости
-
-  if (selectedHorses.includes(selectedHorse)) {
-    resultElement.textContent =
-      "На эту лошадь ставка уже принята";
-    return;
-  }
-
-  // Сохраняем ставку
+ // Сохраняем ставку
 
   selectedHorses.push(selectedHorse);
 
