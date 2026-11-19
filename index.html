@@ -475,6 +475,8 @@ function changeLanes() {
   laneCount += laneDirection;
   localStorage.setItem("laneCount", laneCount);
   selectedHorses = [];
+  localStorage.setItem("selectedHorses", "[]");
+  localStorage.setItem("stakeCount", "0");
   stakeCount = 0;
 
   drawLanes();
