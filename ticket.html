@@ -94,6 +94,8 @@ drawTicket();
 
 function drawTicket() {
 
+saveButton.disabled = true;
+
 // Фон билета
 ctx.fillStyle = "#14251b";
 ctx.fillRect(0, 0, 900, 560);
@@ -125,35 +127,69 @@ ctx.stroke();
 // Номер заезда
 ctx.textAlign = "left";
 ctx.fillStyle = "#ffffff";
-ctx.font = "bold 48px Arial";
-ctx.fillText("ЗАЕЗД №", 110, 330);
+ctx.font = "bold 40px Arial";
+ctx.fillText("ЗАЕЗД №", 100, 345);
 
 ctx.textAlign = "right";
 ctx.fillStyle = "#75e68a";
-ctx.font = "bold 75px Arial";
-ctx.fillText(String(race), 790, 330);
+ctx.font = "bold 65px Arial";
+ctx.fillText(String(race), 590, 345);
 
 // Номер лошади
 ctx.textAlign = "left";
 ctx.fillStyle = "#ffffff";
-ctx.font = "bold 48px Arial";
-ctx.fillText("ЛОШАДЬ №", 110, 430);
+ctx.font = "bold 40px Arial";
+ctx.fillText("ЛОШАДЬ №", 100, 445);
 
 ctx.textAlign = "right";
 ctx.fillStyle = "#75e68a";
-ctx.font = "bold 90px Arial";
-ctx.fillText(String(horse), 790, 435);
+ctx.font = "bold 75px Arial";
+ctx.fillText(String(horse), 590, 445);
 
 // Нижняя надпись
 ctx.textAlign = "center";
 ctx.fillStyle = "#b9d9c0";
-ctx.font = "28px Arial";
+ctx.font = "25px Arial";
 ctx.fillText(
 "СОХРАНИТЕ БИЛЕТ ДО ОКОНЧАНИЯ ЗАЕЗДА",
 450,
-505
+520
 );
+
+// Локальная генерация QR-кода
+try {
+const qr = qrcode(0, "M");
+
+qr.addData(location.href);
+qr.make();
+
+const qrImage = new Image();
+
+qrImage.onload = () => {
+
+  // Белое поле
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(650, 275, 210, 210);
+
+  // QR-код
+  ctx.drawImage(qrImage, 665, 290, 180, 180);
+
+  saveButton.disabled = false;
+  message.textContent = "";
+};
+
+qrImage.onerror = () => {
+  message.textContent = "Ошибка создания QR-кода.";
+};
+
+qrImage.src = qr.createDataURL(6, 4);
+} catch (error) {
+message.textContent = "Не удалось создать QR-код.";
+console.error(error);
 }
+}
+
+
 
 // Преобразование билета в PNG
 function makeImage() {
