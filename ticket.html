@@ -83,7 +83,7 @@ const message = document.getElementById("message");
 const saveButton = document.getElementById("saveButton");
 
 if (
-!Number.isInteger(race)  race < 1 
+!Number.isInteger(race) || race < 1 ||
 !Number.isInteger(horse) || horse < 1
 ) {
 message.textContent = "Ошибка: номер билета не указан.";
@@ -172,7 +172,7 @@ const blob = await makeImage();
 
 const file = new File(
   [blob],
-  HORSE-RACE-${race}-${horse}.png,
+  `HORSE-RACE-${race}-${horse}.png`,
   { type: "image/png" }
 );
 
@@ -194,7 +194,7 @@ if (
   const link = document.createElement("a");
 
   link.href = url;
-  link.download = HORSE-RACE-${race}-${horse}.png;
+  link.download = `HORSE-RACE-${race}-${horse}.png`;
 
   document.body.appendChild(link);
   link.click();
