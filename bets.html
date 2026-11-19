@@ -225,12 +225,7 @@ function drawHorseChoices() {
     button.className = "horseButton";
     button.textContent = "№ " + i;
 
-    const alreadyTaken = selectedHorses.includes(i);
-
-    if (alreadyTaken) {
-      button.disabled = true;
-      button.textContent += " ✓";
-    }
+    
 
     if (selectedHorse === i) {
       button.classList.add("selected");
@@ -251,13 +246,7 @@ function drawHorseChoices() {
     horseChoices.appendChild(button);
   }
 
-  if (selectedHorses.
-length >= laneCount) {
-    betButton.disabled = true;
-
-    resultElement.textContent =
-      "Все ставки на этот заезд приняты";
-  }
+  
 }
 
 
