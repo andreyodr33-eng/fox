@@ -206,45 +206,22 @@ saveButton.addEventListener("click", async () => {
 try {
 const blob = await makeImage();
 
-const file = new File(
-  [blob],
-  `HORSE-RACE-${race}-${horse}.png`,
-  { type: "image/png" }
-);
+const url = URL.createObjectURL(blob);
+const link = document.createElement("a");
 
-// На телефонах с поддержкой обмена файлами
-if (
-  navigator.share &&
-  navigator.canShare &&
-  navigator.canShare({ files: [file] })
-) {
-  await navigator.share({
-    files: [file],
-    title: "Билет HORSE RACE"
-  });
+link.href = url;
+link.download = `HORSE-RACE-${race}-${horse}.png`;
 
-  message.textContent = "Выберите сохранение изображения.";
-} else {
-  // Обычная загрузка файла
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
+document.body.appendChild(link);
+link.click();
+link.remove();
 
-  link.href = url;
-  link.download = `HORSE-RACE-${race}-${horse}.png`;
+setTimeout(() => URL.revokeObjectURL(url), 10000);
 
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-
-  setTimeout(() => URL.revokeObjectURL(url), 10000);
-
-  message.textContent = "Билет подготовлен к сохранению.";
-}
+message.textContent = "Билет сохранён.";
 } catch (error) {
-if (error.name !== "AbortError") {
 message.textContent = "Не удалось сохранить билет.";
 console.error(error);
-}
 }
 });
 </script>
