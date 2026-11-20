@@ -730,7 +730,9 @@ function finishRace(winner) {
   racing = false;
 
   stopGallopAnimation();
-
+  const horseSound = document.getElementById("horseSound");
+  horseSound.pause();
+  horseSound.currentTime = 0;
   clearInterval(raceTimer);
   clearInterval(animationTimer);
 
