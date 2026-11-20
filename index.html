@@ -553,6 +553,20 @@ function prepareNextRace() {
   
   document.getElementById("startButton").disabled = true;
 }
+ // -------------------- разблокировка речи Safari --------------------
+
+    document.addEventListener(
+        "pointerup",
+        () => {
+
+            const u =
+                new SpeechSynthesisUtterance(" ");
+
+            speechSynthesis.speak(u);
+
+        },
+        { once: true }
+    );
 
 function speakText(text){
 
