@@ -460,6 +460,8 @@ preparePrint(printTickets);
 
 // Регистрация ставки
 
+// Регистрация ставки
+
 function registerStake() {
 
   if (selectedHorse === null) {
@@ -467,7 +469,7 @@ function registerStake() {
     return;
   }
 
- // Сохраняем ставку
+  // Сохраняем ставку
 
   selectedHorses.push(selectedHorse);
 
@@ -484,18 +486,28 @@ function registerStake() {
   resultElement.textContent =
     "ПРИНЯТА СТАВКА НА ЛОШАДЬ № " + selectedHorse;
 
-  // Формируем ссылку на билет
+  // Сохраняем билет для печати
 
-  const ticketURL =
-    new URL("ticket.html", window.location.href).href +
-    "?race=" + raceNumber +
-    "&horse=" + selectedHorse;
+  const ticket = {
+    race: raceNumber,
+    horse: selectedHorse
+  };
 
-  // Создаём QR-код
+  printTickets.push(ticket);
 
-  const qrImageURL =
-    "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" +
-    encodeURIComponent(ticketURL);
+  localStorage.setItem(
+    "printTickets",
+    JSON.stringify(printTickets)
+  );
+
+  updatePrintButtons();
+
+  // Создаём QR-код на экране
+
+  const qrImageURL = createTicketQR(
+    raceNumber,
+    selectedHorse
+  );
 
   qrCode.innerHTML = "";
 
@@ -510,12 +522,16 @@ function registerStake() {
 
   qrBox.hidden = false;
 
-  // Сбрасываем выбор и обновляем свободные места
+  // Сбрасываем выбор
 
   selectedHorse = null;
 
   drawHorseChoices();
 }
+
+  
+
+  
 
 
 // Кнопка регистрации
