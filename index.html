@@ -553,6 +553,38 @@ function prepareNextRace() {
   
   document.getElementById("startButton").disabled = true;
 }
+
+function speakText(text){
+
+return new Promise(resolve=>{
+
+const utter =
+  new SpeechSynthesisUtterance(text);
+
+utter.lang = "en-US";
+utter.rate = 0.9;
+
+const voices =
+  speechSynthesis.getVoices();
+
+const englishVoice =
+  voices.find(v => v.name === "Karen")
+  ||
+  voices.find(v => v.name === "Samantha")
+  ||
+  voices.find(v => v.name === "Daniel")
+  ||
+  voices.find(v => v.lang.includes("en"));
+
+if(englishVoice){
+  utter.voice = englishVoice;
+}
+
+utter.onend = () => resolve();
+
+speechSynthesis.speak(utter);
+});
+}
 // Начало скачек
 function startRace() {
   
