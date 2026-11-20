@@ -81,7 +81,7 @@ const ctx = canvas.getContext("2d");
 
 const message = document.getElementById("message");
 const saveButton = document.getElementById("saveButton");
-
+logo.src = "./horse-frames/icon-180.png";
 if (
 !Number.isInteger(race) || race < 1 ||
 !Number.isInteger(horse) || horse < 1
@@ -89,9 +89,13 @@ if (
 message.textContent = "Ошибка: номер билета не указан.";
 saveButton.disabled = true;
 } else {
+logo.onload = () => {  
 drawTicket();
+};
+logo.onload = () => { 
+  message.textContent = "Не удалось загрузить логотип.";
+ };
 }
-
 function drawTicket() {
 
 saveButton.disabled = true;
