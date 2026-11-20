@@ -126,6 +126,45 @@ h1 {
   text-decoration: none;
   line-height: 52px;
 }
+.actionBar {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 500px;
+  margin: 25px auto 0;
+}
+
+.actionButton {
+  flex: 1;
+  min-width: 0;
+  min-height: 58px;
+  padding: 5px 2px;
+  border: 1px solid #75e68a;
+  border-radius: 10px;
+  background: #258b45;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.actionButton:disabled {
+  opacity: 0.35;
+}
+
+.actionButton .printerIcon {
+  font-size: 22px;
+}
+
+#backButton {
+  background: transparent;
+  line-height: normal;
+}  
 </style>
 </head>
 
