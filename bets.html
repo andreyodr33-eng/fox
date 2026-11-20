@@ -173,40 +173,67 @@ h1 {
   body > * {
     display: none !important;
   }
-
-  #printArea {
-    display: block !important;
-    width: 58mm;
-    background: white;
-    color: black;
-  }
-
-  .printTicket {
-    width: 58mm;
-    padding: 3mm;
-    text-align: center;
-    font-family: Arial, sans-serif;
-    page-break-after: always;
-    break-after: page;
-  }
-
-  .printTicket:last-child {
-    page-break-after: auto;
-    break-after: auto;
-  }
-
-  .printLogo {
-    width: 18mm;
-    height: 18mm;
-    object-fit: contain;
-  }
-
-  .printQR {
-    width: 30mm;
-    height: 30mm;
-  }
-}  
-</style>
+ #printArea {
+display: none;
+}
+@media print {
+{
+box-sizing: border-box;
+}
+@page {
+size: 58mm auto;
+margin: 0;
+}
+html,
+body {
+margin: 0 !important;
+padding: 0 !important;
+width: 58mm;
+background: white;
+color: black;
+}
+body {
+display: block;
+}
+body > * {
+display: none !important;
+}
+#printArea {
+display: block !important;
+width: 58mm;
+margin: 0;
+padding: 0;
+background: white;
+color: black;
+}
+.printTicket {
+width: 58mm;
+padding: 2mm;
+margin: 0;
+text-align: center;
+font-family: Arial, sans-serif;
+background: white;
+color: black;
+page-break-after: always;
+break-after: page;
+break-inside: avoid;
+}
+.printTicket:last-child {
+page-break-after: auto;
+break-after: auto;
+}
+.printLogo {
+width: 18mm;
+height: 18mm;
+object-fit: contain;
+}
+.printQR {
+width: 30mm;
+height: 30mm;
+object-fit: contain;
+}
+}
+ </style>
 </head>
 
 <body>
