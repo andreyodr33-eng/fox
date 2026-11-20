@@ -71,6 +71,9 @@ button:active {
 <div id="message"></div>
 <script src="qrcode.min.js"></script>
 <script>
+const logo = new Image();
+logo.src = "./horse-frames/icon-180.png";
+  
 const params = new URLSearchParams(location.search);
 
 const race = Number(params.get("race"));
