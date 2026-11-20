@@ -559,6 +559,11 @@ function startRace() {
   if (racing) return;
   raceWinner = null;
   racing = true;
+  const horseSound = document.getElementById("horseSound");
+  horseSound.currentTime = 0;
+  horseSound.play().catch(error => {
+  console.log("Не удалось запустить звук:", error);
+});
 
   document.getElementById("laneButton").disabled = true;
   document.getElementById("betButton").disabled = true;
