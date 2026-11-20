@@ -730,6 +730,10 @@ if (raceWinner === null && firstWinner !== null) {
   raceWinner = firstWinner;
   winnerTime = firstWinnerTime;
 
+  speakText(
+    "Horse number " + raceWinner + " wins!"
+  );
+
   const hundredths = Math.floor(winnerTime / 10);
   const seconds = Math.floor(hundredths / 100);
   const fraction = hundredths % 100;
