@@ -309,6 +309,37 @@ const horseChoices = document.getElementById("horseChoices");
 const betButton = document.getElementById("betButton");
 const qrBox = document.getElementById("qrBox");
 const qrCode = document.getElementById("qrCode");
+  
+const printArea = document.getElementById("printArea");
+const printLastButton = document.getElementById("printLastButton");
+const printAllButton = document.getElementById("printAllButton");
+
+// Билеты текущего заезда
+let printTickets = [];
+
+try {
+  printTickets = JSON.parse(
+    localStorage.getItem("printTickets")
+  ) || [];
+} catch {
+  printTickets = [];
+}
+
+// Проверяем, что билеты относятся к текущему заезду
+if (Number(localStorage.getItem("printTicketsRace")) !== raceNumber) {
+  printTickets = [];
+  localStorage.setItem("printTicketsRace", raceNumber);
+  localStorage.setItem("printTickets", JSON.stringify([]));
+}
+
+function updatePrintButtons() {
+  const hasTickets = printTickets.length > 0;
+
+  printLastButton.disabled = !hasTickets;
+  printAllButton.disabled = !hasTickets;
+}
+
+updatePrintButtons();  
 
 // Отображение исходных данных
 
