@@ -383,7 +383,80 @@ function drawHorseChoices() {
 
   
 }
+// Создание QR-кода для печатного билета
 
+function createTicketQR(race, horse) {
+const ticketURL =
+new URL("ticket.html", window.location.href).href +
+"?race=" + race +
+"&horse=" + horse;
+
+const qr = qrcode(0, "M");
+qr.addData(ticketURL);
+qr.make();
+
+return qr.createDataURL(6, 4);
+}
+
+// Подготовка билетов к печати
+
+function preparePrint(tickets) {
+printArea.innerHTML = "";
+
+tickets.forEach(ticket => {
+const qrImage = createTicketQR(
+ticket.race,
+ticket.horse
+);
+
+const ticketElement = document.createElement("div");
+ticketElement.className = "printTicket";
+
+ticketElement.innerHTML = `
+  <img
+    class="printLogo"
+    src="./horse-frames/icon-180.png"
+    alt="HORSE RACE"
+  >
+
+  <h2>HORSE RACE</h2>
+
+  <p>ЗАЕЗД № ${ticket.race}</p>
+
+  <h2>ЛОШАДЬ № ${ticket.horse}</h2>
+
+  <img
+    class="printQR"
+    src="${qrImage}"
+    alt="QR-код билета"
+  >
+`;
+
+printArea.appendChild(ticketElement);
+});
+
+setTimeout(() => {
+window.print();
+}, 300);
+}
+
+// Печать последнего билета
+
+printLastButton.addEventListener("click", () => {
+if (printTickets.length === 0) return;
+
+preparePrint([
+printTickets[printTickets.length - 1]
+]);
+});
+
+// Печать всех билетов
+
+printAllButton.addEventListener("click", () => {
+if (printTickets.length === 0) return;
+
+preparePrint(printTickets);
+});
 
 // Регистрация ставки
 
