@@ -1,4 +1,4 @@
-const CACHE_NAME = "horse-race-v1";
+const CACHE_NAME = "horse-race-v2";
 
 const APP_FILES = [
 "./",
@@ -6,6 +6,7 @@ const APP_FILES = [
 "./bets.html",
 "./ticket.html",
 "./qrcode.min.js",
+"./horse.wav,        
 
 "./horse-frames/horse0.png",
 "./horse-frames/horse01.png",
