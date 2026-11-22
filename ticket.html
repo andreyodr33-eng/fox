@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HORSE RACE — Билет</title>
+<title>HORSE RACE — Ticket</title>
 <link rel="manifest" href="./manifest.json">
 <style>
 * {
@@ -62,11 +62,11 @@ button:active {
 
 <body>
 
-<h2>ВАШ БИЛЕТ</h2>
+<h2>YOUR TICKET</h2>
 
 <canvas id="ticket" width="900" height="560"></canvas>
 
-<button id="saveButton">СОХРАНИТЬ БИЛЕТ</button>
+<button id="saveButton">SAVE TICKET</button>
 
 <div id="message"></div>
 <script src="qrcode.min.js"></script>
@@ -162,7 +162,7 @@ ctx.textAlign = "center";
 ctx.fillStyle = "#b9d9c0";
 ctx.font = "25px Arial";
 ctx.fillText(
-"СОХРАНИТЕ БИЛЕТ ДО ОКОНЧАНИЯ ЗАЕЗДА",
+"KEEP YOUR TICKET UNTIL THE RACE IS OVER",
 450,
 520
 );
