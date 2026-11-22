@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>HORSE RACE — Ставки</title>
+<title>HORSE RACE — BETS</title>
 <link rel="manifest" href="./manifest.json">
 <style>
 * {
@@ -239,32 +239,32 @@ object-fit: contain;
 <body>
 
 <h1>HORSE RACE</h1>
-<h2>ПРИЁМ СТАВОК</h2>
+<h2>PLACE BETS</h2>
 
 <div class="info">
   <div>
-    ЗАЕЗД<br>
+    RACE<br>
     № <strong id="raceNumber">1</strong>
   </div>
 
   <div>
-    ДОРОЖЕК<br>
+    LANES<br>
     <strong id="laneCount">2</strong>
   </div>
 </div>
 
-<div id="result">Выберите лошадь</div>
+<div id="result">Select a horse</div>
 
 <div id="horseChoices"></div>
 
 <button id="betButton" disabled>
-  ПРИНЯТЬ СТАВКУ
+  PLACE BET
 </button>
 
 <div id="qrBox" hidden>
   <div id="qrCode"></div>
   <div id="qrHint">
-    Покажите QR-код участнику
+    Scan
   </div>
 </div>
   
@@ -275,7 +275,7 @@ class="actionButton"
 disabled
 >
 <span class="printerIcon">🖨️</span>
-ПОСЛЕДНИЙ
+LAST
 </button>
 <button
 id="printAllButton"
@@ -283,7 +283,7 @@ class="actionButton"
 disabled
 >
 <span class="printerIcon">🖨️</span>
-ВСЕ БИЛЕТЫ
+ALL TICKETS
 </button>
 <a
 id="backButton"
@@ -291,7 +291,7 @@ class="actionButton"
 href="./index.html"
 >
 <span class="printerIcon">↩</span>
-К ИГРЕ
+BACK TO GAME
 </a>
 </div> 
 <div id="printArea"></div>  
@@ -448,14 +448,14 @@ ticketElement.innerHTML = `
 
   <h2>HORSE RACE</h2>
 
-  <p>ЗАЕЗД № ${ticket.race}</p>
+  <p>RACE № ${ticket.race}</p>
 
-  <h2>ЛОШАДЬ № ${ticket.horse}</h2>
+  <h2>HORSE № ${ticket.horse}</h2>
 
   <img
     class="printQR"
     src="${qrImage}"
-    alt="QR-код билета"
+    alt="Ticket QR code"
   >
 `;
 
@@ -485,7 +485,7 @@ if (printTickets.length === 0) return;
 preparePrint(printTickets);
 });
 
-// Регистрация ставки
+
 
 // Регистрация ставки
 
@@ -511,7 +511,7 @@ function registerStake() {
   );
 
   resultElement.textContent =
-    "ПРИНЯТА СТАВКА НА ЛОШАДЬ № " + selectedHorse;
+    "BET PLACED ON HORSE № " + selectedHorse;
 
   // Сохраняем билет для печати
 
@@ -541,7 +541,7 @@ function registerStake() {
   const img = document.createElement("img");
 
   img.src = qrImageURL;
-  img.alt = "QR-код билета";
+  img.alt = "Ticked QR code";
   img.width = 240;
   img.height = 240;
 
