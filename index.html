@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -301,12 +301,12 @@ button {
 </div>
 
 <div class="board-side board-right">
-  ЗАЕЗД № <span id="raceNumber">1</span>
+  RACE № <span id="raceNumber">1</span>
  </div>
 </div>
 <div class="board-row board-bottom">
  <div class="board-side board-left">
-  ДОРОЖЕК:
+  LANES:
   <span id="laneInfo">2</span>
 </div>
 
@@ -316,7 +316,7 @@ button {
 
 <div class="board-side board-right board-bets">
   <div>
-    СТАВКИ:
+    BETS:
     <span id="betInfo">0</span><span id="betLimit">2</span>
   </div>
   <div id="betList">Нет</div>
@@ -429,7 +429,7 @@ function drawLanes() {
           class="horse horse-image"
           id="horse${i}"
           src="horse-frames/horse0.png"
-          alt="Лошадь"
+          alt="Horse"
          >
       </div>
     `;
@@ -608,7 +608,7 @@ function startRace() {
   const horseSound = document.getElementById("horseSound");
   horseSound.currentTime = 0;
   horseSound.play().catch(error => {
-  console.log("Не удалось запустить звук:", error);
+  console.log("Failed to play audio:", error);
 });
 
   document.getElementById("laneButton").disabled = true;
@@ -811,15 +811,15 @@ const startButton = document.getElementById("startButton");
 
 <div class="controls">
   <button id="laneButton" onclick="changeLanes()">
-    ДОРОЖКА
+    LANE
   </button>
 
   <button id="betButton" onclick="window.location.href='bets.html'">
-    СТАВКА
+    BET
   </button>
 
   <button id="startButton" onclick="startRace()">
-    СТАРТ
+    START
   </button>
 </div>
 <script>
@@ -835,7 +835,7 @@ if ("serviceWorker" in navigator) {
       })
       .catch(error => {
         console.error(
-          "Ошибка регистрации Service Worker:",
+          "Service Worker registration error:",
           error
         );
       });
