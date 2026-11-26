@@ -714,7 +714,11 @@ const lane = document.getElementById("lane" + (i + 1));
 const horse = document.getElementById("horse" + (i + 1));
 
 const previous = progress[i];
-
+console.log(
+  "Дорожка:", i + 1,
+  "Предыдущее:", previous,
+  "Следующее:", previous + horseSpeeds[i]
+);
 const distance = lane.clientWidth - 100;
 
 // Сколько нужно пробежать, чтобы полностью скрыться
