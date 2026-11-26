@@ -396,11 +396,16 @@ horseFrameIndex = 0;
 
 // Сразу показываем первый кадр галопа
 for (let i = 1; i <= laneCount; i++) {
-  const horse = document.getElementById("horse" + i);
+const horse = document.getElementById("horse" + i);
 
-  if (horse) {
-    horse.src = "horse-frames/horse0.png";
-  }
+if (horse) {
+
+if (i === 1) {
+  horse.src = horseStartFrame1.src;
+} else {
+  horse.src = "horse-frames/horse0.png";
+}
+}
 }
 
 horseFrameTimer = setTimeout(() => {
