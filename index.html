@@ -448,25 +448,32 @@ document.getElementById("raceNumber").textContent =
   raceNumber;
 
 // Создание дорожек
+// Создание дорожек
 function drawLanes() {
-  track.innerHTML = "";
-  
-  for (let i = 1; i <= laneCount; i++) {
-    track.innerHTML += `
-      <div class="lane" id="lane${i}">
-        <span class="lane-number">${i}</span>
-        <div class="finish"></div>
-        <img
-          class="horse horse-image"
-          id="horse${i}"
-          src="horse-frames/horse0.png"
-          alt="Horse"
-         >
-      </div>
-    `;
-   }
-  updateInfo();
- }
+track.innerHTML = "";
+
+for (let i = 1; i <= laneCount; i++) {
+
+const horseImage = i === 1
+  ? "horse1/horse0.png"
+  : "horse-frames/horse0.png";
+
+track.innerHTML += `
+  <div class="lane" id="lane${i}">
+    <span class="lane-number">${i}</span>
+    <div class="finish"></div>
+    <img
+      class="horse horse-image"
+      id="horse${i}"
+      src="${horseImage}"
+      alt="Horse"
+    >
+  </div>
+`;
+}
+
+updateInfo();
+}
     
 
 // Добавление дорожки
