@@ -420,11 +420,16 @@ if (horseFrameIndex >= horseFrames.length) {
 
 for (let i = 1; i <= laneCount; i++) {
 
-  const horse = document.getElementById("horse" + i);
+const horse = document.getElementById("horse" + i);
 
-  if (horse) {
-    horse.src = horseFrames[horseFrameIndex].src;
-  }
+if (horse) {
+
+if (i === 1) {
+  horse.src = horseFrames1[horseFrameIndex].src;
+} else {
+  horse.src = horseFrames[horseFrameIndex].src;
+}
+}
 }
  }, 50);
 }, 200);
