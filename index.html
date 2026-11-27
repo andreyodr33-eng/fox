@@ -385,7 +385,26 @@ const horseStartFrame1 = new Image();
 
 horseStartFrame1.src =
   "horse1/horse0.png";
-  
+ // Загружаем 12 кадров каштановой лошади
+const horseFrames2 = [];
+
+for (let i = 1; i <= 12; i++) {
+
+  const img = new Image();
+
+  img.src =
+    "horse2/horse" +
+    String(i).padStart(2, "0") +
+    ".png";
+
+  horseFrames2.push(img);
+}
+
+// Стартовый кадр каштановой лошади
+const horseStartFrame2 = new Image();
+
+horseStartFrame2.src =
+  "horse2/horse0.png"; 
 // Запуск покадровой анимации
 function startGallopAnimation() {
 
