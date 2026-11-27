@@ -448,15 +448,16 @@ document.getElementById("raceNumber").textContent =
   raceNumber;
 
 // Создание дорожек
-// Создание дорожек
+
 function drawLanes() {
 track.innerHTML = "";
 
 for (let i = 1; i <= laneCount; i++) {
 
-const horseImage = i === 1
-  ? "horse1/horse0.png"
-  : "horse-frames/horse0.png";
+const horseImage =
+  i === 1 ? "horse1/horse0.png" :
+  i === 2 ? "horse2/horse0.png" :
+  "horse-frames/horse0.png";
 
 track.innerHTML += `
   <div class="lane" id="lane${i}">
