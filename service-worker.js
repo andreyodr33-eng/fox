@@ -1,4 +1,4 @@
-const CACHE_NAME = "horse-race-v3";
+const CACHE_NAME = "horse-race-v4";
 
 const APP_FILES = [
 "./",
@@ -25,7 +25,67 @@ const APP_FILES = [
 "./horse-frames/icon-32.png",
 "./horse-frames/icon-180.png",
 "./horse-frames/icon-192.png",
-"./horse-frames/icon-512.png"
+"./horse-frames/icon-512.png",
+
+  // Белая лошадь
+"./horse1/horse0.png",
+"./horse1/horse01.png",
+"./horse1/horse02.png",
+"./horse1/horse03.png",
+"./horse1/horse04.png",
+"./horse1/horse05.png",
+"./horse1/horse06.png",
+"./horse1/horse07.png",
+"./horse1/horse08.png",
+"./horse1/horse09.png",
+"./horse1/horse10.png",
+"./horse1/horse11.png",
+"./horse1/horse12.png",
+
+// Каштановая лошадь
+"./horse2/horse0.png",
+"./horse2/horse01.png",
+"./horse2/horse02.png",
+"./horse2/horse03.png",
+"./horse2/horse04.png",
+"./horse2/horse05.png",
+"./horse2/horse06.png",
+"./horse2/horse07.png",
+"./horse2/horse08.png",
+"./horse2/horse09.png",
+"./horse2/horse10.png",
+"./horse2/horse11.png",
+"./horse2/horse12.png",
+
+// Аппалуза
+"./horse3/horse0.png",
+"./horse3/horse01.png",
+"./horse3/horse02.png",
+"./horse3/horse03.png",
+"./horse3/horse04.png",
+"./horse3/horse05.png",
+"./horse3/horse06.png",
+"./horse3/horse07.png",
+"./horse3/horse08.png",
+"./horse3/horse09.png",
+"./horse3/horse10.png",
+"./horse3/horse11.png",
+"./horse3/horse12.png",
+
+// Буланая лошадь
+"./horse4/horse0.png",
+"./horse4/horse01.png",
+"./horse4/horse02.png",
+"./horse4/horse03.png",
+"./horse4/horse04.png",
+"./horse4/horse05.png",
+"./horse4/horse06.png",
+"./horse4/horse07.png",
+"./horse4/horse08.png",
+"./horse4/horse09.png",
+"./horse4/horse10.png",
+"./horse4/horse11.png",
+"./horse4/horse12.png"      
 ];
 
 // Установка
