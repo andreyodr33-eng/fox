@@ -423,6 +423,23 @@ const horseStartFrame3 = new Image();
 horseStartFrame3.src =
   "horse3/horse0.png"; 
   
+  // Загружаем 12 кадров буланой лошади
+const horseFrames4 = [];
+
+for (let i = 1; i <= 12; i++) {
+  const img = new Image();
+  img.src =
+    "horse4/horse" +
+    String(i).padStart(2, "0") +
+    ".png";
+  horseFrames4.push(img);
+}
+
+// Стартовый кадр буланой лошади
+const horseStartFrame4 = new Image();
+horseStartFrame4.src =
+  "horse4/horse0.png";
+  
 // Запуск покадровой анимации
 function startGallopAnimation() {
 
