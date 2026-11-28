@@ -428,7 +428,6 @@ function startGallopAnimation() {
 
 stopGallopAnimation();
 
-
 horseFrameIndex = 0;
 
 // Сразу показываем первый кадр галопа
@@ -441,6 +440,8 @@ if (i === 1) {
   horse.src = horseStartFrame1.src;
 } else if (i === 2) {
   horse.src = horseStartFrame2.src;
+} else if (i === 3) {
+  horse.src = horseStartFrame3.src;
 } else {
   horse.src = "horse-frames/horse0.png";
 }
