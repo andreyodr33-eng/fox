@@ -406,6 +406,22 @@ const horseStartFrame2 = new Image();
 
 horseStartFrame2.src =
   "horse2/horse0.png"; 
+ // Загружаем 12 кадров аппалузы
+const horseFrames3 = [];
+
+for (let i = 1; i <= 12; i++) {
+  const img = new Image();
+  img.src =
+    "horse3/horse" +
+    String(i).padStart(2, "0") +
+    ".png";
+  horseFrames3.push(img);
+}
+
+// Стартовый кадр аппалузы
+const horseStartFrame3 = new Image();
+horseStartFrame3.src =
+  "horse3/horse0.png"; 
   
 // Запуск покадровой анимации
 function startGallopAnimation() {
