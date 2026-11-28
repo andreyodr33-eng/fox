@@ -454,13 +454,15 @@ const horse = document.getElementById("horse" + i);
 if (horse) {
 
 if (i === 1) {
-  horse.src = horseStartFrame1.src;
+  horse.src = horseFrames1[horseFrameIndex].src;
 } else if (i === 2) {
-  horse.src = horseStartFrame2.src;
+  horse.src = horseFrames2[horseFrameIndex].src;
 } else if (i === 3) {
-  horse.src = horseStartFrame3.src;
+  horse.src = horseFrames3[horseFrameIndex].src;
+} else if (i === 4) {
+  horse.src = horseFrames4[horseFrameIndex].src;
 } else {
-  horse.src = "horse-frames/horse0.png";
+  horse.src = horseFrames[horseFrameIndex].src;
 }
 }
 }
